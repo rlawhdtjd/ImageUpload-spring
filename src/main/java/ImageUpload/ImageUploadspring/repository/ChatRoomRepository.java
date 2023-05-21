@@ -3,12 +3,13 @@
 데이터베이스와의 상호작용 추상화, 도메인 모델과의 연결고리 역할
  */
 
-package network.chatserver.repository;
+package ImageUpload.ImageUploadspring.repository;
 
-import jakarta.annotation.PostConstruct;
-import network.chatserver.domain.ChatRoom;
+
+import ImageUpload.ImageUploadspring.domain.ChatRoom;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Repository //데이터 저장소 역할 수행

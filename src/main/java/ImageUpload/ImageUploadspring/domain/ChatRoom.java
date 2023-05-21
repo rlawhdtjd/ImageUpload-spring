@@ -1,4 +1,5 @@
-package network.chatserver.domain;
+package ImageUpload.ImageUploadspring.domain;
+
 
 import lombok.Getter;
 import lombok.Setter;

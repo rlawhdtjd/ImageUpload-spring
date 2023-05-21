@@ -1,7 +1,8 @@
-package network.chatserver.handler.controller;
+package ImageUpload.ImageUploadspring.controller;
 
+import ImageUpload.ImageUploadspring.domain.ChatRoom;
+import ImageUpload.ImageUploadspring.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
-import network.chatserver.domain.ChatRoom;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ import java.util.List;
 @RequestMapping("/chat") //'/chat'경로를 기준으로 요청 매핑 처리
 public class ChatRoomController {
 
-    private final network.chatserver.repository.ChatRoomRepository chatRoomRepository;
+    private final ChatRoomRepository chatRoomRepository;
 
     // 채팅 리스트 화면
     @GetMapping("/room")

@@ -3,7 +3,7 @@
 클라이언트의 요청을 처리, 필요한 작업 수행하는 역할
  */
 
-package network.chatserver.handler.controller;
+package ImageUpload.ImageUploadspring.controller;
 
 import lombok.RequiredArgsConstructor;
 import network.chatserver.domain.ChatMessage;
