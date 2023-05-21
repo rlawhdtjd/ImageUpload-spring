@@ -33,7 +33,35 @@
       {{message.sender}} - {{message.message}}</a>
     </li>
   </ul>
-  <div></div>
+  <div>
+    <form>
+      <input type="file" name="image" accept="image/*" />
+      <input type="submit" value="Upload" />
+    </form>
+    <ul id="imageLinks"></ul>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('form').on('submit', function(event) {
+          event.preventDefault();
+
+          var formData = new FormData();
+          formData.append('image', $('input[type=file]')[0].files[0]);
+
+          $.ajax({
+            url: '/uploadImage',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(imageId) {
+              $('#imageLinks').append('<li><a href="/image/' + imageId + '">View Image</a></li>');
+            }
+          });
+        });
+      });
+    </script>
+  </div>
 </div>
 <!-- JavaScript -->
 <script src="/webjars/vue/2.5.16/dist/vue.min.js"></script>

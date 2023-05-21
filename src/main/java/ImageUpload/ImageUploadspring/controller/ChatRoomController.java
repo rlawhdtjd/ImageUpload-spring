@@ -17,10 +17,11 @@ public class ChatRoomController {
     private final ChatRoomRepository chatRoomRepository;
 
     // 채팅 리스트 화면
-    @GetMapping("/room")
-    public String rooms(Model model) {
-        return "room.html";
-    }
+//    @GetMapping("/room")
+//    public String rooms(Model model) {
+//        return "room.html";
+//    }
+
     // 모든 채팅방 목록 반환
     @GetMapping("/rooms")
     @ResponseBody

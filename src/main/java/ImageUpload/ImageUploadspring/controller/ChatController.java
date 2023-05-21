@@ -5,8 +5,8 @@
 
 package ImageUpload.ImageUploadspring.controller;
 
+import ImageUpload.ImageUploadspring.domain.ChatMessage;
 import lombok.RequiredArgsConstructor;
-import network.chatserver.domain.ChatMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
