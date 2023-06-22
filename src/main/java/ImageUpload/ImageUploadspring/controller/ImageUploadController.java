@@ -1,5 +1,9 @@
 package ImageUpload.ImageUploadspring.controller;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,7 +38,18 @@ public class ImageUploadController {
     }
 
     @GetMapping("/image/{fileName:.+}")
-    public byte[] getImage(@PathVariable String fileName) {
-        return uploadedImages.get(fileName);
+    public ResponseEntity<Resource> getImage(@PathVariable String fileName) {
+        byte[] imageData = uploadedImages.get(fileName);
+
+        if (imageData == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        ByteArrayResource resource = new ByteArrayResource(imageData);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_PNG)
+                .contentLength(imageData.length)
+                .body(resource);
     }
 }
