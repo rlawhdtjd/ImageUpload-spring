@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Upload and Display</title>
+</head>
+<body>
+<h1>Image Upload and Display</h1>
+
+<form id="uploadForm">
+    <input type="file" id="imageFile" accept="image/*">
+    <button type="submit">Upload</button>
+</form>
+
+<div id="imageContainer"></div>
+
+<script>
+        // 업로드 폼 제출 시 처리
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // 폼 제출 이벤트 중지
+
+            var fileInput = document.getElementById('imageFile');
+            var file = fileInput.files[0];
+
+            // FormData 객체 생성 및 파일 데이터 추가
+            var formData = new FormData();
+            formData.append('file', file);
+
+            // 이미지 업로드 AJAX 요청
+            var request = new XMLHttpRequest();
+            request.open('POST', '/upload');
+            request.onload = function() {
+                if (request.status === 200) {
+                    var imageUrl = request.responseText;
+                    displayImage(imageUrl);
+                } else {
+                    alert('Image upload failed');
+                }
+            };
+            request.send(formData);
+        });
+
+        // 이미지 표시 함수
+        function displayImage(imageUrl) {
+            var imageContainer = document.getElementById('imageContainer');
+            imageContainer.innerHTML = ''; // 기존 이미지 삭제
+
+            var imageElement = document.createElement('img');
+            imageElement.src = imageUrl;
+            imageElement.alt = 'Uploaded Image';
+            imageContainer.appendChild(imageElement);
+        }
+    </script>
+</body>
+</html>
