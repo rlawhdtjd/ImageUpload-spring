@@ -1,36 +1,40 @@
 package ImageUpload.ImageUploadspring.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.apache.tomcat.util.codec.binary.Base64;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 
-@Controller
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
 public class ImageUploadController {
 
-    private final AtomicInteger idCounter = new AtomicInteger();
-    private final ConcurrentHashMap<Integer, String> imageStore = new ConcurrentHashMap<>();
+    private Map<String, byte[]> uploadedImages = new HashMap<>();
 
-    @PostMapping("/uploadImage")
-    @ResponseBody
-    public int uploadImage(@RequestParam("image") MultipartFile image) {
-        try {
-            String base64Image = Base64.encodeBase64String(image.getBytes());
-            int id = idCounter.incrementAndGet();
-            imageStore.put(id, base64Image);
-            return id;
-        } catch (Exception e) {
-            e.printStackTrace();
+    @PostMapping("/upload")
+    public String singleFileUpload(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return "Please select a file to upload";
         }
-        return -1;
+
+        try {
+            // 업로드된 이미지를 메모리에 저장
+            byte[] imageData = file.getBytes();
+            String fileName = file.getOriginalFilename();
+            uploadedImages.put(fileName, imageData);
+
+            // 업로드된 파일의 URL 반환
+            String fileUrl = "/image/" + fileName;
+            return fileUrl;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Upload failed";
+        }
     }
 
-    @GetMapping("/image/{id}")
-    public String displayImage(@PathVariable int id, Model model) {
-        model.addAttribute("image", imageStore.get(id));
-        return "displayImage";
+    @GetMapping("/image/{fileName:.+}")
+    public byte[] getImage(@PathVariable String fileName) {
+        return uploadedImages.get(fileName);
     }
 }
